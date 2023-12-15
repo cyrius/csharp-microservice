@@ -49,11 +49,25 @@ namespace UserService.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, User user)
+        public async Task<IActionResult> UpdateUser(int id, UserUpdateModel userUdpate)
         {
-            if (id != user.Id)
+            if (id != userUdpate.Id)
             {
                 return BadRequest();
+            }
+
+            var user = await _context.User.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if(userUdpate.Name != null) user.Name = userUdpate.Name;
+            if(userUdpate.Email != null) user.Email = userUdpate.Email;
+
+            if(userUdpate.Password != null) {
+                user.PasswordHash = _passwordHasher.HashPassword(user, userUdpate.Password);
             }
 
             _context.Entry(user).State = EntityState.Modified;
