@@ -13,7 +13,7 @@ Sur le front:
  - Faire une page pour afficher un visuel de votre second micro service ( liste de tâches )
 
 Sur la gateway:
-- Créer la route register pour le user qui 
+- Créer la route register pour le user 
 - Verifier que le user / pass ne comporte que des caractère alphanumérique.
 - Ajouter un controller pour le second micro service qui relaie les appel
 
