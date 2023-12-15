@@ -1,0 +1,37 @@
+@page "/login"
+@inject ILogger<Login> Logger
+@inject NavigationManager NavigationManager
+@inject LoginService loginService
+@inject AuthenticationStateProvider authStateProvider
+
+<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+    <InputText @bind-Value="loginModel.Username" />
+    <InputText @bind-Value="loginModel.Password" type="password" />
+    <button type="submit">Login</button>
+</EditForm>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+
+
+    private async void HandleLogin()
+    {
+        var user = loginService.AuthenticateUser(loginModel.Username, loginModel.Password);
+        if (user != null)
+        {
+            var userClaim = await ((CustomAuthenticationStateProvider)authStateProvider).MarkUserAsAuthenticated(user);
+
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            // Handle failed authentication
+        }
+    }
+
+    private class LoginModel
+    {
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+}

@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authStateProvider
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +9,16 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <p>Hello, @context.User.Identity.Name !</p>
+                    <a @onclick="Logout">Logout</a>
+                </Authorized>
+                <NotAuthorized>
+                    <p>You're not connected.</p>
+                </NotAuthorized>
+            </AuthorizeView>
+            
         </div>
 
         <article class="content px-4">
@@ -21,3 +32,15 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+
+    private async void Logout()
+    {
+        // Kill the session
+        await((CustomAuthenticationStateProvider)authStateProvider).Logout();
+        // Redirect the user to the login page
+        NavigationManager.NavigateTo("/login");
+        
+    }
+}
