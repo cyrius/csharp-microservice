@@ -26,6 +26,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<ProtectedLocalStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<TodoService>();
 
 
 var app = builder.Build();

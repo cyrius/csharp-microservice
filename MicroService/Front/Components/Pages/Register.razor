@@ -1,0 +1,53 @@
+@page "/register"
+@inject ILogger<Login> Logger
+@inject NavigationManager NavigationManager
+@inject LoginService loginService
+@inject AuthenticationStateProvider authStateProvider
+
+
+<EditForm Model="@registerModel" OnValidSubmit="HandleLogin">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="registerModel.Username" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText id="password" class="form-control" @bind-Value="registerModel.Password" type="password" />
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="registerModel.Email" type="email" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Login</button>
+</EditForm>
+
+<span style="color: red">@error</span>
+
+@code {
+    private RegisterModel registerModel = new RegisterModel();
+    private string error = "";
+
+    private async void HandleLogin()
+    {
+        var user = await loginService.RegisterUser(registerModel.Username, registerModel.Password, registerModel.Email);
+        if (user != null)
+        {
+            error = "";
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            error = "Login or password or email invalid !";
+        }
+    }
+
+    private class RegisterModel
+    {
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
+        public string Email { get; set; } = "";
+    }
+}
