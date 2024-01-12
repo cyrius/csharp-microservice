@@ -1,0 +1,72 @@
+﻿@page "/tasks"
+@inject TodoService todoService
+
+<PageTitle>Task list</PageTitle>
+
+<h1>Task list</h1>
+
+<p>What should I do before tommorow</p>
+
+@if (todos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="addTodo">Add a new todo</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in todos)
+            {
+                <tr>
+                    <td>@todo.Id</td>
+                    <td><InputCheckbox @bind-Value="@todo.IsDone" /></td>
+                    <td>
+                        <InputText @bind-Value="todo.Text" />
+                        <button class="btn btn-danger" @onclick="() => UpdateTodo(todo)">Save</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteTodo(todo.Id)">X</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Todo[]? todos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await todoService.GetAllTasks();
+    }
+
+    private async Task addTodo()
+    {
+        if (todos == null) return;
+        var newTodo = await todoService.CreateNewTask();
+        Console.WriteLine(newTodo.Id);
+        var todosList = todos.ToList();
+        todosList.Add(newTodo);
+        todos = todosList.ToArray();
+    }
+
+    private async Task DeleteTodo(int id)
+    {
+        if (todos == null) return;
+        await todoService.Delete(id);
+        todos = todos.Where(t => t.Id != id).ToArray();
+    }
+
+    private async Task UpdateTodo(Todo todo)
+    {
+        await todoService.UpdateTodo(todo);
+    }
+
+}

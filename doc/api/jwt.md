@@ -131,3 +131,18 @@ builder.Services.AddSwaggerGen(option => {
 
 app.MapSwagger().RequireAuthorization();
 ```
+
+
+## Ajouter le token JWT a notre requete HTTP
+
+Pour que le token JWT soit utilisé, il convient de l'envoyer en même temps que notre requête HTTP
+
+Voici un exemple d'ajout du token a un client HTTP
+
+```cs
+HttpClient httpClient = new HttpClient());
+_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Ici on met le token");
+HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:5000/api/Todo");
+```
+
+Cette requête contiendra notre token et le service qui l'a recevra pourra le récupérer et authentifier l'émetteur grâce a celui-ci
