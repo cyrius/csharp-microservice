@@ -32,7 +32,7 @@ namespace Front.Services
             {
                 var result = await response.Content.ReadFromJsonAsync<Todo[]>();
 
-                return result;
+                return result || [];
             }
             else
             {

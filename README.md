@@ -47,4 +47,40 @@ dotnet add package Microsoft.IdentityModel.Tokens
 dotnet add package System.IdentityModel.Tokens.Jwt
 ```
 
+# Séance 4 & 5
 
+- Finaliser la mise en place des différents micro services et de leur intéractions
+
+
+# Projet attendu 
+
+Pour la notation, chaque groupe devra mettre en ligne un repo git contenant le code du projet.
+
+Vous enverrez le lien du git à cyril@algorion.fr en mentionnant les membres du groupe.
+
+Vous pouvez heberger le projet sur github, gitlab, ... a votre convenance, tant que je peux y accéder.
+
+## Contenu du projet
+
+J'attend que le projet rendu contienne a minima : 
+- 1 appli front en blazor
+- 1 microservice API Gateway
+- 1 microservice Utilisateur
+- 1 microservice pour la gestion des todos (ou autre)
+
+La notation dépendra principalement des points suivants:
+- Le front intéragit avec la gateway
+- La gateway intéragit avec les micro services
+- Le front permet la connexion/inscription d'un utilisateur
+- Une fois connecté le front dispose d'un token JWT qu'il utilise pour authentifier les requêtes a la gateway
+- Le front permet de visualiser/modifier/supprimer les données du microservice des todos
+- Les todos sont associés a un utilisateur, si je me connecte avec le compte A, je ne vois pas les todos de B et inversement
+
+Bonus (non exhaustif) :
+- Vous avez rajoutez un champ rôle aux utilisateurs (basique, admin), ceci nécessite de faire une migration et de l'appliquer en base
+- Vous affichez une page en plus sur le front en fonction du rôle de l'utilisateur (admin peux consulter la liste de tout les utilisateurs inscrit)
+- Gestion des erreurs, si le login/pass est invalide j'affiche un message. Si une requête a la gateway renvoi une erreur, elle est géré
+- Les données du second micro service sont persisté (base de donnée, fichier, ...)
+- Bonne qualité de code (bien indenté, lisible)
+- Vous avez un konami code
+- Vous ajoutez d'autres intéractions/fonctionalités
