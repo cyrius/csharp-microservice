@@ -75,6 +75,7 @@ La notation dépendra principalement des points suivants:
 - Une fois connecté le front dispose d'un token JWT qu'il utilise pour authentifier les requêtes a la gateway
 - Le front permet de visualiser/modifier/supprimer les données du microservice des todos
 - Les todos sont associés a un utilisateur, si je me connecte avec le compte A, je ne vois pas les todos de B et inversement
+- Les données sont validés/filtrés par la gateway, on interdit les mail avec des caractère spéciaux par exemple
 
 Bonus (non exhaustif) :
 - Vous avez rajoutez un champ rôle aux utilisateurs (basique, admin), ceci nécessite de faire une migration et de l'appliquer en base
